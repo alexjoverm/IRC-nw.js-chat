@@ -1,0 +1,289 @@
+@import "mixins"; 
+@import "fontawesome"; 
+
+// Colors
+$blue:         #387ef5 !default;
+$blue-light:   #11c1f3 !default;
+$green:        #33cd5f !default;
+$yellow:       #ffc900 !default;
+$red:          #ef473a !default;
+$orange:       #e87b1e !default;
+
+$main-color: $blue;
+
+// Sizes
+$bd-rd-btn: 4px; 
+
+$pd-m: 6px 12px;
+
+
+
+//******** GENERAL
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+
+#container{
+
+    > header{
+        background: $blue;
+        color: white;
+        padding: 18px 0; 
+
+        > *{
+            margin: 0;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+        
+        h2{
+            width: 22%;
+            text-align: center;
+        }
+        
+        .topbar{
+            width: 70%;
+            text-align: right; 
+            
+            .btn{
+                margin-left: 10px;
+                font-size: 18px;
+            }
+        }
+    }
+
+    > footer{
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        background: #eee;
+        padding: 18px 0;
+        text-align: center;
+        border-top: 1px solid #ccc;
+
+        input{
+            width: 60%;
+        }
+
+        .btn{
+            margin-left: -8px;
+            margin-top: -1px;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    }
+
+    > .content-wrap{ 
+
+        min-height: 700px;
+
+        > div{
+            padding: 12px;
+            box-sizing: border-box;
+        }
+
+        .sidebar{ 
+            width: 20%;
+            float: left;
+            background: #eee;
+            box-shadow: 1px 1px 1px #ccc;
+
+            &.fixed{
+                //position: fixed;
+                //top: 0;
+            }
+        }
+
+        .content{
+            width: 80%;
+            float: right;
+            padding-left: 26px;
+            padding-bottom: 90px;
+
+            .message{ 
+                padding: 12px;
+                border-radius: 4px;
+                border: 1px solid #ccc;
+                box-shadow: 1px 1px 2px #ccc;
+                margin: 16px 0;
+
+                span{
+                    padding: 6px;
+                    background: $blue;
+                    color: white;
+                    border-radius: 4px;
+                    margin-right: 12px;
+                }
+            }
+
+            .message.private{
+                .private-user{
+                    background: $green;
+                }
+            }
+
+            .message.myself{
+                margin-left: 30px;
+            }
+        }
+    }
+
+    .section-title{
+        text-align: center;
+        color: $blue;
+        margin-bottom: 40px;
+    }
+
+    .connecting{
+        background: rgba(255, 255, 255, 0.8);
+        position: absolute;
+        top: 10px; right: 10px;
+        box-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+        padding: 12px;
+        border-radius: 999px;
+        transition: all 1s ease; 
+
+        i{ font-size: 18px; }
+    }
+
+}
+
+
+.popup-container{ 
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    z-index: 12;
+    
+    .popup{
+        width: 280px;
+        max-width: 100%;
+        max-height: 90%;
+        border-radius: 0px;
+        background-color: white;
+        display: flex;
+        -webkit-box-direction: normal;
+        -webkit-box-orient: vertical;
+        flex-direction: column;
+        text-align: center;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+        
+        header{
+            font-size: 18px;
+            color: #515151;
+            padding: 14px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        div{
+            padding: 16px;
+            
+            input{
+                width: 80%;
+            }
+            
+            .btn{ 
+                margin-top: 19px;
+                width: 80%;
+                border-radius: 2px;
+            }
+        }
+        
+    }
+}
+
+
+
+input[type="text"]{
+    @include input();
+}
+
+input.private:focus{
+    border: 1px solid $orange;
+    box-shadow: inset 0 1px 1px rgba(0,0,0, 0.1), 0 0 8px rgba(232, 123, 30, 0.6);
+
+    &:after{
+        content: "private";
+        display: inline-block;
+        color: $orange;
+    }
+}
+
+input.private{
+    &:after{
+        content: "private";
+        display: inline-block;
+        color: $orange;
+    }
+}
+
+b.private{
+    color: $orange;
+    font-size: 11px;
+}
+
+
+
+//******** BUTTONS
+.btn{
+    border-radius: $bd-rd-btn;
+    display: inline-block;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    user-select: none;
+    text-decoration: none;
+    padding: $pd-m;
+    font-size: 14px;
+    line-height: 1.42857143;
+
+
+    &:focus, &:hover{
+        text-decoration: none;
+    }
+
+    &:active, &.active {
+        outline: 0;
+        background-image: none;
+        box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+    }
+
+    &.disabled, &[disabled], fieldset[disabled] & {
+        cursor: not-allowed;
+        pointer-events: none; // Future-proof disabling of clicks
+        opacity: 0.65;
+        box-shadow: none;
+    }
+}
+
+.btn-icon{
+    i{ margin-right: 9px; }
+}
+
+.btn-blue{
+    @include button-color($main-color); 
+}
+
+.btn-green{
+    @include button-color($green);
+}
+
+.btn-yellow{
+    @include button-color($yellow);
+}

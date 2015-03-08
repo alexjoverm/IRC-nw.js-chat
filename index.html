@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello World!</title>
+
+        <script src="lib/angular.js"></script>
+
+        <script src="js/index.js"></script>
+
+        <link rel="stylesheet" href="main.css">
+
+    </head>
+    <body ng-app="IRCchat" ng-controller="indexCtrl">
+       
+       <div class="popup-container" ng-show="config.showPopup">
+          <div class="popup">
+              <header>Nickname</header>
+              <div>
+                  <p><input type="text" placeholder="Nick..." ng-model="nick.name" ng-enter="NickChanged()"></p>
+                  <a href="" class="btn btn-blue btn-icon" ng-click="NickChanged()">OK</a>
+              </div>
+          </div> 
+       </div>
+       
+        <div id="container">
+
+            <header>
+                <h2>IRC chat</h2>
+                <div class="topbar" ng-show="config.canSend">
+                    Hello, <b>{{ nick.name }}</b>
+                    <a href="" class="btn btn-blue" ng-click="ChangeNick()"><i class="fa fa-pencil"></i></a>
+                </div>
+            </header>
+            
+            <div class="connecting btn-icon" ng-show="config.loading">
+                <i class="fa fa-spinner fa-spin"></i> Connecting...
+            </div>
+            
+            
+
+            <div class="content-wrap">
+                <div class="sidebar" ng-class="{'fixed': boolChangeClass}">
+                    <h3 class="section-title btn-icon"><i class="fa fa-users"></i> Users</h3>
+
+                    <p ng-repeat="user in users">
+                        {{ user.nick }} 
+                    </p>
+                </div>
+
+                <div class="content">
+                    <h3 class="section-title btn-icon"><i class="fa fa-envelope"></i> Messages</h3>
+
+                    <div class="message" ng-class="{'private': msg.private, 'myself': msg.user == nick.name }" ng-repeat="msg in messages">
+                        <span><i class="fa fa-user"></i> {{msg.user}}</span>
+                        <span class="private-user" ng-show="msg.private"><i class="fa fa-user"></i> {{msg.userDest}}</span>
+                        {{ msg.msg }}
+                        
+                    </div>
+                </div>
+            </div>
+
+
+            <footer>
+                <b class="private" ng-show="message[0] == '@'">Private</b>
+                <input type="text" placeholder="Message... (@nick to send private)" ng-model="message" ng-enter="SendMessage()" ng-class="{'private': message[0] == '@'}">
+                <a href="" class="btn btn-blue btn-icon" ng-class="{'disabled': !config.canSend}" ng-click="SendMessage()" >
+                    <i class="fa fa-send"></i> Send
+                </a>
+            </footer>
+
+        </div>
+    </body>
+</html>
